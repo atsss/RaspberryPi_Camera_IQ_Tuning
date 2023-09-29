@@ -6,7 +6,7 @@ def index():
 
 @route('/camera/<filename>')
 def camera(filename):
-    picam2.start_and_capture_file("./img/"+filename+".jpg")
+    picam2.start_and_capture_file("./img/"+filename)
     return static_file(filename, root='./img/')
 
 @route('/img/<filename>')
