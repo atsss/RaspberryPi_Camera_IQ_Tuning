@@ -1,14 +1,14 @@
-from bottle import route, run
+from bottle import run, route, template
 
 @route('/')
-def root():
-    return "Hello World!"
+def index():
+    return template('index')
 
 @route('/camera')
 def camera():
-    from picamera2 import Picamera2
+    from picamera2 import Picamera2, Preview
     picam2 = Picamera2()
-    #カメラ画像を保存する
+    picam2.start_preview(Preview.NULL)
     picam2.start_and_capture_file("test.jpg")
     return "Hello World!"
 
