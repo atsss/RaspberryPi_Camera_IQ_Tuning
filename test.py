@@ -4,13 +4,13 @@ from bottle import run, route, template , static_file
 def index():
     return template('index')
 
-@route('/camera')
-def camera():
+@route('/camera/<filename>')
+def camera(filename):
     from picamera2 import Picamera2, Preview
     picam2 = Picamera2()
     picam2.start_preview(Preview.NULL)
-    picam2.start_and_capture_file("test.jpg")
-    return "Hello World!"
+    picam2.start_and_capture_file("./img/"+filename+".jpg")
+    return static_file(filename, root='./img/')
 
 @route('/img/<filename>')
 def show_img(filename):
