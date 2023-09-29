@@ -12,13 +12,13 @@
 
 	<script>
 	function relode() {
-		location.reload()
+		document.camera.src = "/img/fileName.jpg" + "?" + Date.now();
 	}
 
-	setTimeout(relode, 2000);
+	setTimeout(relode, 5000);
 	</script>
 
-	<img src="/camera/test.jpg" width="20%" height="20%"/>
+	<img src="/camera/test.jpg" name="camera" width="20%" height="20%"/>
 
 
 </body>
