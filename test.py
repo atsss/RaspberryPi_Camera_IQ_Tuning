@@ -6,14 +6,16 @@ def index():
 
 @route('/camera/<filename>')
 def camera(filename):
-    from picamera2 import Picamera2, Preview
-    picam2 = Picamera2()
-    picam2.start_preview(Preview.NULL)
     picam2.start_and_capture_file("./img/"+filename+".jpg")
     return static_file(filename, root='./img/')
 
 @route('/img/<filename>')
 def show_img(filename):
     return static_file(filename, root='./img/')
+
+
+from picamera2 import Picamera2, Preview
+picam2 = Picamera2()
+picam2.start_preview(Preview.NULL)
 
 run(host='192.168.100.9', port=8080, debug=True)
