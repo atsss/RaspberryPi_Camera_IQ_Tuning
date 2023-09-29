@@ -1,4 +1,4 @@
-from bottle import run, route, template
+from bottle import run, route, template , static_file
 
 @route('/')
 def index():
@@ -12,5 +12,8 @@ def camera():
     picam2.start_and_capture_file("test.jpg")
     return "Hello World!"
 
+@route('/img/<filename>')
+def show_img(filename):
+    return static_file(filename, root='./img/')
 
 run(host='192.168.100.9', port=8080, debug=True)
