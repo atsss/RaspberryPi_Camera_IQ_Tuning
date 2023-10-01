@@ -9,17 +9,18 @@
 
 <body bgcolor="ffffff">
 
+	<img src="/camera/test.jpg" name="camera" width="50%" height="50%"/>
+
 
 	<script>
 	function relode() {
 		document.camera.src = "/camera/test.jpg"+"?" + Date.now();;
-		//setTimeout(relode, 1000);
+		setTimeout(relode, 1500);
 	}
 
 	setTimeout(relode, 1500);
 	</script>
 
-	<img src="/camera/test.jpg" name="camera" width="20%" height="20%"/>
 
 
 </body>
