@@ -6,8 +6,8 @@ def index():
 
 @route('/camera/<filename>')
 def camera(filename):
-    pos = filename.find('?')+1
-    filename = filename[:pos]
+    #pos = filename.find('?')
+    #filename = filename[:pos]
     print(filename)
     picam2.start_and_capture_file("./img/"+filename)
     return static_file(filename, root='./img/')
