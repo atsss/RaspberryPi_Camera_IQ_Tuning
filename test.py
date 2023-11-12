@@ -8,5 +8,8 @@ print(camera_config)
 picam2.start_preview(Preview.QTGL)
 picam2.start()
 time.sleep(2)
-picam2.capture_file("test.jpg")
+while 1:
+    picam2.capture_file("test.jpg")
+    time.sleep(2)
+
 
