@@ -17,6 +17,7 @@ while 1:
     time.sleep(1)
     picam2.set_controls({"ExposureTime": 10000, "AnalogueGain": gain})
     gain = gain + 0.1
+    time.sleep(5)
 
 
 
