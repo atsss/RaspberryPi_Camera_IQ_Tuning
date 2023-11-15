@@ -10,17 +10,7 @@ print(camera_config)
 
 picam2.start_preview(Preview.QTGL)
 picam2.start()
-time.sleep(2)
-
-gain =0.0
-while 1:
-    picam2.capture_file("test.jpg")
-    time.sleep(1)
-    picam2.set_controls({"ExposureTime": 10000, "AnalogueGain": gain})
-    gain = gain + 0.1
-    time.sleep(5)
-
-
+picam2.capture_file("test.jpg")
 
 """
 {
