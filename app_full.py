@@ -61,7 +61,9 @@ def post_callback(request):
 
 
 # Set up camera and application
-picam2 = Picamera2()
+tuning = Picamera2.load_tuning_file("imx296.json")
+picam2 = Picamera2(tuning=tuning)
+#picam2 = Picamera2()
 picam2.post_callback = post_callback
 lores_size = picam2.sensor_resolution
 while lores_size[0] > 1600:
