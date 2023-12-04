@@ -2,7 +2,7 @@ from picamera2 import Picamera2, Preview
 import time
 import json
 
-tuning =  Picamera2.load_tuning_file('imx296_mono.json',dir=".")           
+tuning =  Picamera2.load_tuning_file('imx296_mono_custom.json',dir="./")           
 picam2 = Picamera2(tuning=tuning)
 camera_config = picam2.create_preview_configuration()
 picam2.configure(camera_config)
