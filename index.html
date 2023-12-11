@@ -1,0 +1,32 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html lang="ja">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+		<meta http-equiv="Content-Style-Type" content="text/css">
+		<title>Camera Testing</title>
+	</head>
+
+<body bgcolor="ffffff">
+
+    <style>
+        .img{
+            transform:rotate(180deg);
+        }
+    </style>  
+
+	<img src="/camera/test.jpg" name="camera" width="100%" height="100%"  class="img"/>
+	
+	<script>
+	function relode() {
+		document.camera.src = "/camera/test.jpg"+"?" + Date.now();;
+		setTimeout(relode, 1000);
+	}
+
+	setTimeout(relode, 1000);
+	</script>
+
+
+
+</body>
+</html>
