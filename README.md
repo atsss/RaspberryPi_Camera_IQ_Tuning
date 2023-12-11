@@ -135,3 +135,11 @@ Raspberry Pi RasbianOS
     b_offset = 0.225
 
     変更後、再度 python color_checker_V2.pyを実行し、出力結果を再度JSONに張ります。
+
+# 依存関係
+    pip install opencv-python
+    pip install --user colour-science
+    pip install opencv-contrib-python
+    pip install colormath
+    pip install 'numpy==1.22.4'
+    pip install rawpy
