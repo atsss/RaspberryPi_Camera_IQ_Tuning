@@ -15,7 +15,7 @@ print(cv2.__version__)
 
 IMG_SIZE = ((int)(3280/1.5), (int)(2464/1.5))
 IMG_FILE_NAME = 'image.jpg'
-GOPR_FILE_NAME = 'GOPR0070.jpg'
+GOPR_FILE_NAME = 'GOPR0068.jpg'
 
 
 def plot_rgbl(img_rgbl, box_size = (25, 25)):
@@ -158,7 +158,7 @@ def creat_ccm_2(deltaRGBs):
 
     gain =  0.17
     cnt_offset = 0.88
-    r_offset = 0.155
+    r_offset = 0.175
     g_offset = 0.225
     b_offset = 0.225
     
