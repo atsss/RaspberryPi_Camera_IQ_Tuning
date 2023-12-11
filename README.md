@@ -122,9 +122,10 @@ Raspberry Pi RasbianOS
     ccmの中身をcolor_checker_V2で出力された結果を貼り付けます。
     ctの値は低めにして、確実に反映されるようにします。
     または、server.pyのコンソールに書かれたColourTemperatureの値を入れるのが良いと思います。
-    この状態で、画像を保存し、再度確認していく作業。
+    この状態で、JSONを保存し、再度server.pyを実行されると反映される。
+    再度画像を保存し、color_accuracy_V2で色差を確認していく作業。
 
-## JSONの変更方法
+## CCMの変更方法
     color_checker_V2.pyのcreat_ccm_2()にある以下の箇所を変更します
     
     gain =  0.17
