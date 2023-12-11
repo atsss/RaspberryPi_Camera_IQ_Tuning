@@ -99,4 +99,38 @@ Raspberry Pi RasbianOS
     Total: 136.3164938443946
     Total: 5.679853910183109
     という表示がされます。
+
+## JSONの変更方法
+
+    RasPiのフォルダにある　imx219_custom.json　を開きます。
+
+    "rpi.ccm":
+            {
+                "ccms": [
+                    {
+                        "ct": 2470,
+                        "ccm":
+                        [
+                            1.02475 , -0.21500 , -0.21500 ,
+                            -0.28500 , 1.01864 , -0.21500 ,
+                            -0.28500 , -0.21500 , 1.01978
+                        ]
+                    }
+                ]
+            }
+
+    ccmの中身をcolor_checker_V2で出力された結果を貼り付けます。
+    ctの値は低めにして、確実に反映されるようにします。
+    または、server.pyのコンソールに書かれたColourTemperatureの値を入れるのが良いと思います。
+    この状態で、画像を保存し、再度確認していく作業。
+
+## JSONの変更方法
+    color_checker_V2.pyのcreat_ccm_2()にある以下の箇所を変更します
     
+    gain =  0.17
+    cnt_offset = 0.88
+    r_offset = 0.155
+    g_offset = 0.225
+    b_offset = 0.225
+
+    変更後、再度 python color_checker_V2.pyを実行し、出力結果を再度JSONに張ります。
