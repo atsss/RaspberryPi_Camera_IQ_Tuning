@@ -13,7 +13,7 @@ print(cv2.__version__)
 #print(colour.__version__)
 
 IMG_SIZE = ((int)(3280/1.5), (int)(2464/1.5))
-GOPRO_FILE_NAME = 'GOPR0068.jpg'
+GOPRO_FILE_NAME = 'GOPR0075.jpg'
 IMX_FILE_NAME = 'image_json.jpg'
 
 

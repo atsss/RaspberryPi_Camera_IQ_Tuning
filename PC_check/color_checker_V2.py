@@ -3,10 +3,14 @@ import colour
 from PIL import Image
 import numpy as np
 import time
+import math
 import os, sys
 from colormath.color_diff import delta_e_cie2000 , delta_e_cie1976
 from colormath.color_objects import sRGBColor ,LabColor ,XYZColor
 from colormath.color_conversions import convert_color 
+import numpy as np
+import colour
+
 
 print(np.__version__)
 print(cv2.__version__)
@@ -15,7 +19,7 @@ print(cv2.__version__)
 
 IMG_SIZE = ((int)(3280/1.5), (int)(2464/1.5))
 IMG_FILE_NAME = 'image.jpg'
-GOPR_FILE_NAME = 'GOPR0068.jpg'
+GOPR_FILE_NAME = 'GOPR0075.jpg'
 
 
 def plot_rgbl(img_rgbl, box_size = (25, 25)):
@@ -86,7 +90,6 @@ def plot_rgb_chart(rgbl, box_size = (25, 25)):
     clrs = np.clip(clrs * 255, 0, 255).astype('uint8')
     return clrs
 
-
 def creat_ccm(check_rgb,sample_rgb):
     
     print(check_rgb[...,0])
@@ -155,12 +158,14 @@ def creat_ccm(check_rgb,sample_rgb):
     return ccm
 
 def creat_ccm_2(deltaRGBs):
-
-    gain =  0.17
-    cnt_offset = 0.88
-    r_offset = 0.175
-    g_offset = 0.225
-    b_offset = 0.225
+    gain =   -0.22
+    r_gain =  gain  + 0.00
+    g_gain =  gain  + 0.00
+    b_gain =  gain  + 0.00
+    cnt_offset = 1.18
+    r_offset = 0.155
+    g_offset = 0.185
+    b_offset = 0.205
     
     print(np.amin(deltaRGBs[...,0]))
     sumR = 1+ (deltaRGBs[...,0].sum()/24)
@@ -171,17 +176,25 @@ def creat_ccm_2(deltaRGBs):
     sumG2 = 1+((np.amax(deltaRGBs[...,1])+np.amin(deltaRGBs[...,1]))/2)
     sumB2 = 1+((np.amax(deltaRGBs[...,2])+np.amin(deltaRGBs[...,2]))/2)
 
+ 
 
+#2504 FFa54f
+#3555 e3e9ff
+#4725 cfddff   
 
-    r_a = sumR*gain + cnt_offset
+    ctt_r = 0xef/255.0 *1.0
+    ctt_g = 0xdd/255.0 *1.0
+    ctt_b = 0xff/255.0 *1.0
+
+    r_a = sumR*r_gain + cnt_offset + ctt_r
     r_b = g_offset - cnt_offset/2 #sumR2/2 # + np.amax(deltaRGBs[...,1])
     r_c = b_offset - cnt_offset/2 # + np.amax(deltaRGBs[...,2])
 
-    g_b = sumG*gain  + cnt_offset
-    g_a = r_offset - cnt_offset/2 # + np.amax(deltaRGBs[...,0])
+    g_b = sumG*g_gain  + cnt_offset + ctt_g
+    g_a = r_offset - cnt_offset/2  # + np.amax(deltaRGBs[...,0])
     g_c = b_offset - cnt_offset/2 # + np.amax(deltaRGBs[...,2])
   
-    b_c = sumB*gain + cnt_offset
+    b_c = sumB*b_gain + cnt_offset  + ctt_b
     b_a = r_offset - cnt_offset/2 # + np.amax(deltaRGBs[...,0])
     b_b = g_offset - cnt_offset/2 # + np.amax(deltaRGBs[...,1])
 
@@ -189,37 +202,6 @@ def creat_ccm_2(deltaRGBs):
     ccm = [r_a, r_b, r_c, g_a, g_b, g_c, b_a, b_b, b_c]
 
     return ccm
-
-def creat_ccm_3(deltaRGBs):
-
-    print(np.amin(deltaRGBs[...,0]))
-
-    sumR = 1+ (deltaRGBs[...,0].sum()/24)
-    sumG = 1+ (deltaRGBs[...,1].sum()/24)
-    sumB = 1+ (deltaRGBs[...,2].sum()/24)
-
-    sumR2 = 1+((np.amax(deltaRGBs[...,0])+np.amin(deltaRGBs[...,0]))/2)
-    sumG2 = 1+((np.amax(deltaRGBs[...,1])+np.amin(deltaRGBs[...,1]))/2)
-    sumB2 = 1+((np.amax(deltaRGBs[...,2])+np.amin(deltaRGBs[...,2]))/2)
-
-    r_a = sumR2*gain
-    r_b = (-1 * np.amax(deltaRGBs[...,1]))*(gain/2)
-    r_c = (-1 * np.amax(deltaRGBs[...,2]))*(gain/2)
-
-    g_b = sumG2*gain
-    g_a = (1-g_b)/2#(-1 * np.amax(deltaRGBs[...,0]))*(gain/2)
-    g_c = (1-g_b)/2#(-1 * np.amax(deltaRGBs[...,2]))*(gain/2)
-  
-    b_c = sumB2*gain
-    b_a = (1-b_c)/2#(-1 * np.amax(deltaRGBs[...,0]))*(gain/2)
-    b_b = (1-b_c)/2#(-1 * np.amax(deltaRGBs[...,1]))*(gain/2)
-    
-
-
-    ccm = [r_a, r_b, r_c, g_a, g_b, g_c, b_a, b_b, b_c]
-
-    return ccm
-
 
 
 FILE_PATH = ".\img" #os.path.join('/', 'Users', 'ats', 'hobbies', 'notebooks', 'assets')
@@ -459,9 +441,9 @@ print(deltaRGBs)
 ccm = creat_ccm_2(deltaRGBs)
 
 print("-------------------------------------------")
-print( "%0.5f , %0.5f , %0.5f ,"  % (ccm[0],ccm[1],ccm[2]))
-print( "%0.5f , %0.5f , %0.5f ,"  % (ccm[3],ccm[4],ccm[5]))
-print( "%0.5f , %0.5f , %0.5f "  % (ccm[6],ccm[7],ccm[8]))
+print( "%0.8f , %0.8f , %0.8f ,"  % (ccm[0],ccm[1],ccm[2]))
+print( "%0.8f , %0.8f , %0.8f ,"  % (ccm[3],ccm[4],ccm[5]))
+print( "%0.8f , %0.8f , %0.8f "  % (ccm[6],ccm[7],ccm[8]))
 
 
 
