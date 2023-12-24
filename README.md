@@ -17,7 +17,7 @@ Raspberry Pi RasbianOS
     git clone https://github.com/nonNoise/RaspberryPi_Camera_Testing.git
     cd RaspberryPi_Camera_Testing/
     python server.py
-    
+
     RaspberryPiのIPアドレス:8080で画像表示サイトが表示される
     画像を左クリックで別名保存ができる
     JSONファイルを書き換えた際は、Ctrl+Cでserver.pyを停止させ、再び実行すると反映される（起動時に反映）
@@ -68,7 +68,7 @@ Raspberry Pi RasbianOS
         IMG_FILE_NAME = 'image.jpg'
         GOPR_FILE_NAME = 'GOPR0070.jpg'
     を変更します。
-    
+
     python color_checker_V2.py
 
     実行が完了すると
@@ -91,7 +91,7 @@ Raspberry Pi RasbianOS
         GOPRO_FILE_NAME = 'GOPR0068.jpg'
         IMX_FILE_NAME = 'image_json.jpg'
     を変更します。
-    
+
     python color_accuracy_V2.py
 
     実行が完了すると
@@ -127,7 +127,7 @@ Raspberry Pi RasbianOS
 
 ## CCMの変更方法
     color_checker_V2.pyのcreat_ccm_2()にある以下の箇所を変更します
-    
+
     gain =  0.17
     cnt_offset = 0.88
     r_offset = 0.155
@@ -136,10 +136,45 @@ Raspberry Pi RasbianOS
 
     変更後、再度 python color_checker_V2.pyを実行し、出力結果を再度JSONに張ります。
 
-# 依存関係
-    pip install opencv-python
-    pip install --user colour-science
-    pip install opencv-contrib-python
-    pip install colormath
-    pip install 'numpy==1.22.4'
-    pip install rawpy
+# 環境構築
+1. Install pyenv
+> https://github.com/pyenv/pyenv
+```
+brew install pyenv
+which pyenv # check
+```
+```
+// bash_profile
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+```
+
+2. Install python 3.11.3
+```
+pyenv install 3.11.3
+```
+
+3. Set v3.11.3 python as local
+```
+pyenv local 3.11.3
+python --version # check
+```
+
+4. Install pipenv
+```
+pip install pipenv
+which pipenv # check
+```
+
+5. Install libraries
+```
+pipenv install
+pipenv install --dev
+```
+
+6. Run
+```
+pipenv shell
+python server.py
+```
