@@ -87,79 +87,20 @@ def plot_rgb_chart(rgbl, box_size = (25, 25)):
     clrs = np.clip(clrs * 255, 0, 255).astype('uint8')
     return clrs
 
-def creat_ccm(check_rgb,sample_rgb):
-    
-    print(check_rgb[...,0])
-    r = check_rgb[...,0]
-    g = check_rgb[...,1]
-    b = check_rgb[...,2]
-    rb = r-b
-    gb = g-b
-    rb_2s = (rb * rb)
-    rb_gbs = (rb * gb)
-    gb_2s = (gb * gb)
-
-    r_rbs = rb * ((sample_rgb[..., 0]/255) - b)
-    r_gbs = gb * ((sample_rgb[..., 0]/255) - b)
-    g_rbs = rb * ((sample_rgb[..., 1]/255) - b)
-    g_gbs = gb * ((sample_rgb[..., 1]/255) - b)
-    b_rbs = rb * ((sample_rgb[..., 2]/255) - b)
-    b_gbs = gb * ((sample_rgb[..., 2]/255) - b)
-
-    print(check_rgb[..., 0])
-    print(sample_rgb[..., 0])
-    """
-    Obtain least squares fit
-    """
-    rb_2 = np.sum(rb_2s)
-    gb_2 = np.sum(gb_2s)
-    rb_gb = np.sum(rb_gbs)
-    r_rb = np.sum(r_rbs)
-    r_gb = np.sum(r_gbs)
-    g_rb = np.sum(g_rbs)
-    g_gb = np.sum(g_gbs)
-    b_rb = np.sum(b_rbs)
-    b_gb = np.sum(b_gbs)
-
-    det = rb_2 * gb_2 - rb_gb * rb_gb
-    print(det)
-
-    """
-    Raise error if matrix is singular...
-    This shouldn't really happen with real data but if it does just take new
-    pictures and try again, not much else to be done unfortunately...
-    """
-    if det < 0.001:
-        raise ArithmeticError
-
-    r_a = (gb_2 * r_rb - rb_gb * r_gb) / det
-    r_b = (rb_2 * r_gb - rb_gb * r_rb) / det
-    """
-    Last row can be calculated by knowing the sum must be 1
-    """
-    r_c = 1 - r_a - r_b
-
-    g_a = (gb_2 * g_rb - rb_gb * g_gb) / det
-    g_b = (rb_2 * g_gb - rb_gb * g_rb) / det
-    g_c = 1 - g_a - g_b
-
-    b_a = (gb_2 * b_rb - rb_gb * b_gb) / det
-    b_b = (rb_2 * b_gb - rb_gb * b_rb) / det
-    b_c = 1 - b_a - b_b
-
-    """
-    format ccm
-    """
-    ccm = [r_a, r_b, r_c, g_a, g_b, g_c, b_a, b_b, b_c]
-
-    return ccm
-
 def creat_ccm_2(deltaRGBs):
     gain =   -0.22
     r_gain =  gain  + 0.00
     g_gain =  gain  + 0.00
     b_gain =  gain  + 0.00
     cnt_offset = 1.18
+
+    #2504 FFa54f
+    #3555 e3e9ff
+    #4725 cfddff
+    ctt_r = 0xef/255.0 *1.0
+    ctt_g = 0xdd/255.0 *1.0
+    ctt_b = 0xff/255.0 *1.0
+
     r_offset = 0.155
     g_offset = 0.185
     b_offset = 0.205
@@ -172,16 +113,6 @@ def creat_ccm_2(deltaRGBs):
     sumR2 = 1+((np.amax(deltaRGBs[...,0])+np.amin(deltaRGBs[...,0]))/2)
     sumG2 = 1+((np.amax(deltaRGBs[...,1])+np.amin(deltaRGBs[...,1]))/2)
     sumB2 = 1+((np.amax(deltaRGBs[...,2])+np.amin(deltaRGBs[...,2]))/2)
-
- 
-
-#2504 FFa54f
-#3555 e3e9ff
-#4725 cfddff   
-
-    ctt_r = 0xef/255.0 *1.0
-    ctt_g = 0xdd/255.0 *1.0
-    ctt_b = 0xff/255.0 *1.0
 
     r_a = sumR*r_gain + cnt_offset + ctt_r
     r_b = g_offset - cnt_offset/2 #sumR2/2 # + np.amax(deltaRGBs[...,1])
