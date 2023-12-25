@@ -14,8 +14,8 @@ Raspberry Pi RasbianOS
 # 基本手順（RaspberryPi編）
     RasPiで　gitでファイルをダウンロードする
 
-    git clone https://github.com/nonNoise/RaspberryPi_Camera_Testing.git
-    cd RaspberryPi_Camera_Testing/
+    git clone git@github.com:atsss/RaspberryPi_Camera_IQ_Tuning.git
+    cd RaspberryPi_Camera_IQ_Tuning/raspberrypi/
     python server.py
 
     RaspberryPiのIPアドレス:8080で画像表示サイトが表示される
@@ -35,7 +35,6 @@ Raspberry Pi RasbianOS
     ※imx219_calibration_1gain.jsonを読み込んで起動します
     RaspberryPiのIPアドレス:8080で画像表示サイトが表示される
     画像を左クリックで別名保存ができる
-    image.jpg  として保存することが多い
 
 ## 作成済み版の画像を取得する
 
@@ -43,7 +42,6 @@ Raspberry Pi RasbianOS
     ※imx219_calibration_V2_2207_mod.jsonを読み込んで起動します
     RaspberryPiのIPアドレス:8080で画像表示サイトが表示される
     画像を左クリックで別名保存ができる
-    image_2207.jpg  として保存することが多い
 
 
 ##  Custom版の画像を取得する
@@ -52,7 +50,6 @@ Raspberry Pi RasbianOS
     ※imx219_custom.jsonを読み込んで起動します
     RaspberryPiのIPアドレス:8080で画像表示サイトが表示される
     画像を左クリックで別名保存ができる
-    image_json.jpg  として保存することが多い
     JSONファイルを書き換えた際は、Ctrl+Cでserver.pyを停止させ、再び実行すると反映される（起動時に反映）
 
 
@@ -60,7 +57,7 @@ Raspberry Pi RasbianOS
 
 ## CCMの値出力方法
 
-    cd PC_check
+    cd laptop
     GoProの写真を用意します。
     server_1gainで取得した画像を用意します
     PC_checkフォルダに入れます
@@ -83,7 +80,8 @@ Raspberry Pi RasbianOS
 
 
 ## 画像の色差確認方法
-    cd PC_check
+
+    cd laptop
     GoProの写真を用意します。
     serverで取得した画像を用意します
     PC_checkフォルダに入れます
@@ -126,10 +124,14 @@ Raspberry Pi RasbianOS
     再度画像を保存し、color_accuracy_V2で色差を確認していく作業。
 
 ## CCMの変更方法
+
     color_checker_V2.pyのcreat_ccm_2()にある以下の箇所を変更します
 
     gain =  0.17
     cnt_offset = 0.88
+    ctt_r = 0xff/255.0 *1.0
+    ctt_g = 0xd5/255.0 *1.0
+    ctt_b = 0xad/255.0 *1.0
     r_offset = 0.155
     g_offset = 0.225
     b_offset = 0.225
