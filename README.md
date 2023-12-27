@@ -1,5 +1,4 @@
-
-Raspberry Pi RasbianOS
+> https://medium.com/p/faa179e838fa
 
 # 前提
     RasbianOSが入っている
